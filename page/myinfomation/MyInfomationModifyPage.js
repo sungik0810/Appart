@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,32 +15,48 @@ import AddressModify from '../../components/myinfomationModifycomponents/Address
 import defaultStyles from '../../modules/DefaultStylesModule';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {dbModifyAxios} from '../../modules/DbModifyAxiosModule';
+import {UserInfoContext} from '../../context/UserInfoContext';
 export default function MyInfomationModifyPage({navigation, route}) {
+  const userInfo = useContext(UserInfoContext);
+  const {
+    address,
+    setAddress,
+    buildingName,
+    setBuildingName,
+    socialId,
+    setSocialId,
+    nickname,
+    setNickname,
+    detailAddress,
+    setDetailAddress,
+    buildingPassword,
+    setBuildingPassword,
+  } = userInfo;
   // --- warning
-  const [address, setAddress] = useState('test');
-  const [buildingName, setBuildingName] = useState('test');
-  // ---
-  const [socialId, setSocialId] = useState('test');
-  const [nickname, setNickname] = useState('test');
-  const [detailAddress, setDetailAddress] = useState('test');
-  // const [zonecode, setZonecode] = useState('');
-  const [buildingPassword, setBuildingPassword] = useState('test');
+  // const [address, setAddress] = useState('test');
+  // const [buildingName, setBuildingName] = useState('test');
+  // // ---
+  // const [socialId, setSocialId] = useState('test');
+  // const [nickname, setNickname] = useState('test');
+  // const [detailAddress, setDetailAddress] = useState('test');
+  // // const [zonecode, setZonecode] = useState('');
+  // const [buildingPassword, setBuildingPassword] = useState('test');
 
-  async function getUserInfo() {
-    const userInfoData = await AsyncStorage.getItem('userInfoStorage');
-    const userInfo = JSON.parse(userInfoData);
-    const userInfoValue = userInfo.value.userInfo;
-    setSocialId(userInfoValue.social_id);
-    setNickname(userInfoValue.nickname);
-    setAddress(userInfoValue.address);
-    setBuildingName(userInfoValue.building_name);
-    setDetailAddress(userInfoValue.detail_address);
-    setBuildingPassword(userInfoValue.building_password);
-    return;
-  }
-  useEffect(() => {
-    getUserInfo();
-  }, []);
+  // async function getUserInfo() {
+  //   const userInfoData = await AsyncStorage.getItem('userInfoStorage');
+  //   const userInfo = JSON.parse(userInfoData);
+  //   const userInfoValue = userInfo.value.userInfo;
+  //   setSocialId(userInfoValue.social_id);
+  //   setNickname(userInfoValue.nickname);
+  //   setAddress(userInfoValue.address);
+  //   setBuildingName(userInfoValue.building_name);
+  //   setDetailAddress(userInfoValue.detail_address);
+  //   setBuildingPassword(userInfoValue.building_password);
+  //   return;
+  // }
+  // useEffect(() => {
+  //   getUserInfo();
+  // }, []);
 
   function modifySubmit() {
     const newUserInfo = {
@@ -63,16 +79,7 @@ export default function MyInfomationModifyPage({navigation, route}) {
         innerContent={
           <View>
             <Input title="이름" editable={false} defaultValue={nickname} />
-            <AddressModify
-              navigation={navigation}
-              route={route}
-              address={address}
-              setAddress={setAddress}
-              detailAddress={detailAddress}
-              setDetailAddress={setDetailAddress}
-              buildingName={buildingName}
-              setBuildingName={setBuildingName}
-            />
+            <AddressModify navigation={navigation} />
 
             <Input
               title="공동 현관 비밀번호"

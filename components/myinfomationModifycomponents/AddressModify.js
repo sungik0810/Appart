@@ -2,23 +2,21 @@ import {TextInput, View, StyleSheet} from 'react-native';
 import Input from '../recyclecomponents/Input';
 import Button from '../recyclecomponents/Button';
 import defaultStyles from '../../modules/DefaultStylesModule';
-import {useEffect} from 'react';
+import {useContext, useEffect} from 'react';
+import {UserInfoContext} from '../../context/UserInfoContext';
 
-export default function AddressModify({
-  navigation,
-  route,
-  address,
-  setAddress,
-  detailAddress,
-  setDetailAddress,
-  buildingName,
-  setBuildingName,
-}) {
+export default function AddressModify({navigation}) {
+  const userInfo = useContext(UserInfoContext);
+  const {
+    address,
+    setAddress,
+    buildingName,
+    setBuildingName,
+    detailAddress,
+    setDetailAddress,
+  } = userInfo;
   function AddressSearchWebViewOpen(navigation) {
-    navigation.navigate('AddressSearchWebView', {
-      setAddress,
-      setBuildingName,
-    });
+    navigation.navigate('AddressSearchWebView');
   }
   return (
     <View>

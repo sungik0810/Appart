@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { useEffect, useContext } from 'react';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import {useEffect, useContext} from 'react';
+import {View, StyleSheet, ScrollView, Text} from 'react-native';
 import LogoImage from '../components/images/LogoImage';
 import Content from '../components/recyclecomponents/Content';
-import MyInfomationComponent from "../components/myinfomationcomponents/MyInfomationComponent"
-import TicketComponent from "../components/myinfomationcomponents/TicketComponent"
-import BoardComponent from "../components/myinfomationcomponents/BoardComponent"
-import CostInfomationComponent from "../components/myinfomationcomponents/CostInfomationComponent"
-
+import MyInfomationComponent from '../components/myinfomationcomponents/MyInfomationComponent';
+import TicketComponent from '../components/myinfomationcomponents/TicketComponent';
+import BoardComponent from '../components/myinfomationcomponents/BoardComponent';
+import CostInfomationComponent from '../components/myinfomationcomponents/CostInfomationComponent';
 
 export default function MyInfomationPage({navigation}) {
   return (
@@ -17,29 +16,19 @@ export default function MyInfomationPage({navigation}) {
       </View>
 
       <Content
-        innerContent={
-          <MyInfomationComponent navigation={navigation}/>
-        }
+        innerContent={<MyInfomationComponent navigation={navigation} />}
       />
 
       <Content
         contentTitle="TICKET"
-        innerContent={
-          <TicketComponent navigation={navigation}/>
-        }
+        innerContent={<TicketComponent navigation={navigation} />}
       />
 
-      <Content
-        innerContent={
-          <BoardComponent/>
-        }
-      />
-      
+      <Content innerContent={<BoardComponent />} />
+
       <Content
         contentTitle="비용 안내"
-        innerContent={
-          <CostInfomationComponent/>
-        }
+        innerContent={<CostInfomationComponent />}
       />
     </ScrollView>
   );

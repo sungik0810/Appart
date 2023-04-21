@@ -1,15 +1,11 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView, Text, TextInput} from 'react-native';
 import Postcode from '@actbase/react-daum-postcode';
-export default function AddressSearchWebViewPage({navigation, route}) {
-  console.log(route.params);
-  const {setAddress, setBuildingName} = route.params;
-  useEffect(() => {
-    navigation.setOptions({
-      setAddress: setAddress,
-      setBuildingName: setBuildingName,
-    });
-  }, []);
+import {UserInfoContext} from '../../context/UserInfoContext';
+export default function AddressSearchWebViewPage({navigation}) {
+  const userInfo = useContext(UserInfoContext);
+  const {setAddress, setBuildingName} = userInfo;
+
   const getAddressData = data => {
     let defaultAddress = ''; // 기본주소
     let defaultBuildingName = ''; // 기본주소
