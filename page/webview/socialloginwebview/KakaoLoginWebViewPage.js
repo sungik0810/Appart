@@ -1,19 +1,21 @@
 import axios from 'axios';
-import {useEffect, useRef} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 import {View, StyleSheet, Alert} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {kakaoLoginRequestTokenAxios} from '../../../modules/socialloginmodule/KakaoLoginAxiosModule';
+import {UserInfoContext} from '../../../context/UserInfoContext';
 const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
 
 export default function KaKaoLoginWebViewPage({navigation, route}) {
   const kakaoLoginUrl = route.params.kakaoLoginUrl;
+  const userInfoContextData = useContext(UserInfoContext);
 
   const getCode = target => {
     const exp = 'code=';
     const condition = target.indexOf(exp);
     if (condition !== -1) {
       const requestCode = target.substring(condition + exp.length);
-      kakaoLoginRequestTokenAxios(requestCode, navigation);
+      kakaoLoginRequestTokenAxios(requestCode, navigation, userInfoContextData);
     }
   };
   return (

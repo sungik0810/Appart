@@ -10,19 +10,40 @@ export const kakaoLoginUrlAxios = async data => {
 };
 
 // WebView가 실행되는 동안 code를 통해 token을 발급한다.
-export const kakaoLoginRequestTokenAxios = async (code, navigation) => {
+export const kakaoLoginRequestTokenAxios = async (
+  code,
+  navigation,
+  userInfoContextData,
+) => {
+  const {
+    setAddress,
+    setBuildingName,
+    setSocialId,
+    setNickname,
+    setDetailAddress,
+    setBuildingPassword,
+  } = userInfoContextData;
+
   const tokenResponse = await axios.post(
     `${baseUrl}/api/auth/kakao/requestToken`,
     {code: code},
   );
   const navigationRoute = tokenResponse.data.value.navigation;
   const userInfo = tokenResponse.data;
+  const userInfoTarget = userInfo.value.userInfo;
+
+  setAddress(userInfoTarget.address);
+  setBuildingName(userInfoTarget.building_name);
+  setSocialId(userInfoTarget.social_id);
+  setNickname(userInfoTarget.nickname);
+  setDetailAddress(userInfoTarget.detail_address);
+  setBuildingPassword(userInfoTarget.building_password);
+
   try {
     const userInfo_JSON = JSON.stringify(userInfo);
     await AsyncStorage.setItem('userInfoStorage', userInfo_JSON);
-    console.log('userInfoStorage 저장');
   } catch (e) {
-    console.log('AsyncStorage Error');
+    console.log('kakaoLoginRequestTokenAxios | AsyncStorage Error');
   }
   return navigation.navigate(navigationRoute);
 };

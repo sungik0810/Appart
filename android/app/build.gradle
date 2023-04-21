@@ -89,6 +89,11 @@ def reactNativeArchitectures() {
 }
 
 android {
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '7.0'
+    }
+
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -166,5 +171,5 @@ dependencies {
         implementation jscFlavor
     }
 }
-
+tasks.register("prepareKotlinBuildScriptModel"){}
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
